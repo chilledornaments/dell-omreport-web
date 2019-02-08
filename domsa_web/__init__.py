@@ -9,7 +9,7 @@ bootstrap = Bootstrap(app)
 app.config.from_object(Config)
 
 client = MongoClient(app.config['MONGOALCHEMY_SERVER'], 27017)
-db = app.config['MONGOALCHEMY_DATABASE']
+db = client[app.config['MONGOALCHEMY_DATABASE']]
 
 
 from domsa_web import routes, json_loadinator

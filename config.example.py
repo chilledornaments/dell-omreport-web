@@ -5,3 +5,9 @@ class Config(object):
     MONGOALCHEMY_USER = ""
     MONGOALCHEMY_PASSWORD = ""
     MONGOALCHEMY_SERVER_AUTH = True
+
+    SLACK = True
+    SLACK_CHANNEL = ""
+    SLACK_USERNAME = ""
+    SLACK_ICON = ""
+    SLACK_WEBHOOK = ""

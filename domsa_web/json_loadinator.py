@@ -1,9 +1,10 @@
 import json
 from pymongo import MongoClient
 from domsa_web import db, app, client
+from domsa_web.alerts import slack
 #from flask_mongoalchemy import MongoAlchemy
 
-
+print(db)
 
 def Temperature(json_object):
     host = json_object['Host']
@@ -24,7 +25,11 @@ def Memory(json_object):
                 size = json_object['Report'][i]['Size']
                 status = json_object['Report'][i]['Status']
                 mongo_doc = {"Host": host, "Device": dev_location, "Manufacturer": manufacturer, "SerialNumber": serial, "PartNumber": part_number, "Speed": speed, "Size": size, "Status": status}
-                host_collection = db[host].insert_one(mongo_doc)
+                host_collection = db[host]
+                host_collection.insert(mongo_doc)
+                if status != 0:
+                        slack.alert("Memory", "Status is not 0 for {}".format(dev_location))
+
 
 #def Processors(json_object):
 

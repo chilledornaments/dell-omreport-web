@@ -14,13 +14,9 @@ db.collection.find().sort({'_id':-1}).limit(1)
 @app.route('/api/report', methods=['POST'])
 def report_api():
      if request.json:
-          #j = json.loads(request.json)
-          print(request.json)
-          #category = request.get_json()
           request_json = request.json
           category = request_json['Category']
-          print(request_json['Host'])
-          print(request_json['Category'])
+
           if category == "Temperature":
                json_loadinator.Temperature(request_json)     
           elif category == "Memory":
@@ -43,3 +39,4 @@ def report_api():
      else:
           return "Invalid json"
      return "Hello"
+
