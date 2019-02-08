@@ -1,0 +1,1 @@
+from domsa-web import app

@@ -1,0 +1,39 @@
+{% extends 'bootstrap/base.html' %}
+<html>
+    <head>
+      {% if title %}
+      <title>{{ title }}</title>
+      {% else %}
+      <title>Dell OMSA Web</title>
+      {% endif %}
+    
+       <!--<link rel="stylesheet" href="{{ url_for('static', filename='base.css') }}">-->
+       <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+       <script src="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+       <!--<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">-->
+    </head>
+    {% block navbar %}
+    <nav class="navbar navbar-inverse">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="{{ url_for('homepage') }}">Check Password</a>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                <li><a href="{{ url_for('about') }}">About This Tool</a></li>
+                </ul>
+
+            </div>
+        </div>
+    </nav>
+    {% endblock %}
+    <body>
+        {% block content %}{% endblock %}
+    </body>
+</html>
