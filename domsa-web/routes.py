@@ -12,4 +12,5 @@ for i in b['Report']:
 def report_api():
     if request.json:
         category = request['Category']
+        
 

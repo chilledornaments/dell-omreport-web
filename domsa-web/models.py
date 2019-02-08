@@ -1,5 +1,15 @@
-import json
-from flask_mongoalchemy import MongoAlchemy
+from domsa-web import db
+from datetime import datetime
+class Temperature(db.Document):
+
+class Memory(db.Document):
+
+class Processors(db.Document):
+
+class PowerSupplies(db.Document):
+
+
+
 
 def Temperature(json_object):
     
