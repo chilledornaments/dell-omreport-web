@@ -9,9 +9,15 @@ def Temperature(json_object):
     for i in json_object['Report']: 
         TempReading = json_object['Report'][i]['TempReading']
         TempInC = json_object['Report'][i]['TempInC']
+        TempInC = TempInC / 10
         mongo_doc = {"Host": host, "Category": "Temperature", "TempReading": TempReading, "TempInC": TempInC}
         host_collection = db[host].insert_one(mongo_doc)
-
+        if TempInC > 42.0:
+                slack.alert("Temperature", "Board on {} is {} degrees celsius".format(host, str(TempInC)))
+        elif TempInC < 8.0:
+                slack.alert("Temperature", "Board on {} is {} degrees celsius".format(host, str(TempInC)))
+        else:
+                pass
 def Memory(json_object):
         host = json_object['Host']
         for i in json_object['Report']:
@@ -26,7 +32,7 @@ def Memory(json_object):
                 host_collection = db[host]
                 host_collection.insert(mongo_doc)
                 if status != 0:
-                        slack.alert("Memory", "Status is not 0 for {}".format(dev_location))
+                        slack.alert("Memory", "Status is not 0 for {} in {}".format(dev_location, host))
 
 
 #def Processors(json_object):
