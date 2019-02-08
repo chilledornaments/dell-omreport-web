@@ -4,8 +4,6 @@ from domsa_web import db, app, client
 from domsa_web.alerts import slack
 #from flask_mongoalchemy import MongoAlchemy
 
-print(db)
-
 def Temperature(json_object):
     host = json_object['Host']
     for i in json_object['Report']: 
