@@ -18,6 +18,7 @@ def report_api():
           print(request.json)
           #category = request.get_json()
           request_json = request.json
+          category = request_json['Category']
           print(request_json['Host'])
           print(request_json['Category'])
           if category == "Temperature":
