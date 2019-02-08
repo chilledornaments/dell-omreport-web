@@ -2,5 +2,6 @@ flask
 flask-dotenv
 python-dotenv
 flask-wtf
-Flask-MongoAlchemy
+#Flask-MongoAlchemy
+pymongo
 flask-bootstrap

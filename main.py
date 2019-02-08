@@ -1,1 +1,1 @@
-from domsa-web import app
+from domsa_web import app

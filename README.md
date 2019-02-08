@@ -3,6 +3,9 @@
 ## Mongo
 
 DB: omsaReports
-Collection: `$Category`
 
-e.g. omsaReports.NICs
+Collection: `$host`
+
+e.g. omsaReports.xenserver
+
+Within each collection will be stats
