@@ -10,14 +10,31 @@ def Temperature(json_object):
         TempReading = json_object['Report'][i]['TempReading']
         TempInC = json_object['Report'][i]['TempInC']
         TempInC = TempInC / 10
-        mongo_doc = {"Host": host, "Category": "Temperature", "TempReading": TempReading, "TempInC": TempInC}
-        host_collection = db[host].insert_one(mongo_doc)
+        #mongo_doc = {"Host": host, "Category": "Temperature", "TempReading": TempReading, "TempInC": TempInC, "Alert": "False"}
+        host_collection = db[host]
+        #inserted_id = host_collection.insert_one(mongo_doc).inserted_id
         if TempInC > 42.0:
-                slack.alert("Temperature", "Board on {} is {} degrees celsius".format(host, str(TempInC)))
+                alert_search = host_collection.find({'Category': 'Temperature'}).sort({'_id':-1}).limit(1)
+                if alert_search['Alert'] == "False":
+                        slack.alert("Temperature", "Board on {} is {} degrees celsius".format(host, str(TempInC)))
+                        mongo_doc = {"Host": host, "Category": "Temperature", "TempReading": TempReading, "TempInC": TempInC, "Alert": "True"}
+                        inserted_id = host_collection.insert_one(mongo_doc).inserted_id
+                else:
+                        mongo_doc = {"Host": host, "Category": "Temperature", "TempReading": TempReading, "TempInC": TempInC, "Alert": "True"}
+                        inserted_id = host_collection.insert_one(mongo_doc).inserted_id
         elif TempInC < 8.0:
-                slack.alert("Temperature", "Board on {} is {} degrees celsius".format(host, str(TempInC)))
+                alert_search = host_collection.find({'Category': 'Temperature'}).sort({'_id':-1}).limit(1)
+                if alert_search['Alert'] == "False":
+                        slack.alert("Temperature", "Board on {} is {} degrees celsius".format(host, str(TempInC)))
+                        mongo_doc = {"Host": host, "Category": "Temperature", "TempReading": TempReading, "TempInC": TempInC, "Alert": "True"}
+                        inserted_id = host_collection.insert_one(mongo_doc).inserted_id
+                else:
+                        mongo_doc = {"Host": host, "Category": "Temperature", "TempReading": TempReading, "TempInC": TempInC, "Alert": "True"}
+                        inserted_id = host_collection.insert_one(mongo_doc).inserted_id
         else:
-                pass
+                mongo_doc = {"Host": host, "Category": "Temperature", "TempReading": TempReading, "TempInC": TempInC, "Alert": "False"}
+                inserted_id = host_collection.insert_one(mongo_doc).inserted_id
+
 def Memory(json_object):
         host = json_object['Host']
         for i in json_object['Report']:
@@ -28,11 +45,38 @@ def Memory(json_object):
                 speed = json_object['Report'][i]['Speed']
                 size = json_object['Report'][i]['Size']
                 status = json_object['Report'][i]['Status']
-                mongo_doc = {"Host": host, "Device": dev_location, "Manufacturer": manufacturer, "SerialNumber": serial, "PartNumber": part_number, "Speed": speed, "Size": size, "Status": status}
+                #mongo_doc = {"Host": host, "Device": dev_location, "Manufacturer": manufacturer, "SerialNumber": serial, "PartNumber": part_number, "Speed": speed, "Size": size, "Status": status}
                 host_collection = db[host]
-                host_collection.insert(mongo_doc)
-                if status != 0:
-                        slack.alert("Memory", "Status is not 0 for {} in {}".format(dev_location, host))
+                #inserted_id = host_collection.insert_one(mongo_doc).inserted_id
+                if status != "0":
+                        
+                        #alert_search = host_collection.find_one([{"Category": "Memory"}, {"Host": host}, {"Device": i}], sort=[('_id', -1)])#.limit(1)
+                        alert_search = host_collection.find({"Category": "Memory", "Device": i}, sort=[('_id', -1)], limit=1)
+                        #print(alert_search)
+                        for item in alert_search:
+                       
+                                try:
+                                        #alert_search = host_collection.find_one([{"Category": "Memory"}, {"Host": host}, {"Device": i}], sort=[('_id', -1)])#.limit(1)
+                                        
+                                        
+                                        
+                                        if item['Alert'] == "False":
+                                                slack_alert_message = "Memory", "Status is not 0 for {} in {}".format(dev_location, host)
+
+                                                slack.alert("Memory", slack_alert_message)
+                                                mongo_doc = {"Host": host, "Category": "Memory", "Device": dev_location, "Manufacturer": manufacturer, "SerialNumber": serial, "PartNumber": part_number, "Speed": speed, "Size": size, "Status": status, "Alert": "True"}
+                                                host_collection.insert(mongo_doc)
+                                        else:
+                                                mongo_doc = {"Host": host, "Category": "Memory", "Device": dev_location, "Manufacturer": manufacturer, "SerialNumber": serial, "PartNumber": part_number, "Speed": speed, "Size": size, "Status": status, "Alert": "True"}
+                                                host_collection.insert(mongo_doc)
+                                except TypeError as e:
+                                        mongo_doc = {"Host": host, "Category": "Memory", "Device": dev_location, "Manufacturer": manufacturer, "SerialNumber": serial, "PartNumber": part_number, "Speed": speed, "Size": size, "Status": status, "Alert": "False"}
+                                        host_collection.insert(mongo_doc)
+                                        print(str(e))
+                                
+                else:
+                        mongo_doc = {"Host": host, "Category": "Memory", "Device": dev_location, "Manufacturer": manufacturer, "SerialNumber": serial, "PartNumber": part_number, "Speed": speed, "Size": size, "Status": status, "Alert": "False"}
+                        host_collection.insert(mongo_doc)
 
 
 #def Processors(json_object):

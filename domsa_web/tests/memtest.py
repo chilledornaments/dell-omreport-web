@@ -1,4 +1,4 @@
-import json
+import json, requests
 
 j = {}
 j['Host'] = "xenserver2"
