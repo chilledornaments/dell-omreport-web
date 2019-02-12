@@ -1,15 +1,14 @@
 {% extends "base.html" %}
 
 {% block app_content %}
-<h1>Servers</h1>
-<div class="row">
-    <div class="col-md-4">
-        <ul>
-            {% for coll in colls %}
-            <li>coll</li>
-            {% endfor %}
-        </ul>
-    </div>
+<div class="page-header">
+    <h1>Servers</h1>
 </div>
+
+<ul class="list-group">
+    {% for coll in colls %}
+    <li class="list-group-item">coll</li>
+    {% endfor %}
+</ul>
 
 {% endblock %}
