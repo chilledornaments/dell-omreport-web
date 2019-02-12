@@ -48,7 +48,7 @@ def Memory(json_object):
                 size = json_object['Report'][i]['Size']
                 status = json_object['Report'][i]['Status']
                 host_collection = db[host]
-                if status != 0:    
+                if status != "0":    
                         alert_search = host_collection.find({"Category": "Memory", "Device": i}, sort=[('_id', -1)], limit=1)
                         if alert_search.count() == 0:
                                 slack_alert_message = "Status is not 0 for {} in {}".format(dev_location, host)
@@ -93,7 +93,7 @@ def Processors(json_object):
 
                 host_collection = db[host]
 
-                if status != 0:
+                if status != "0":
                         alert_search = host_collection.find({"Category": "Processors", "Device": proc_name}, sort=[('_id', -1)], limit=1)
                         if alert_search.count() == 0:
                                 slack_alert_message = "Status is not 0 for {} in {}".format(proc_name, host)

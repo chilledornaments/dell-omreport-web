@@ -1,7 +1,7 @@
 import json, requests
 
 j = {}
-j['Host'] = "xenserver2"
+j['Host'] = "xenserver"
 j['Category'] = "Memory"
 j['Report'] = {}
 j['Report']['DIMM_A1'] = {"Manufacturer": "Micron Technology (002C00B3802C)", "SerialNumber": "D75958FA", "PartNumber": "36JSZF1G72PZ-1G4D1", "Speed": "1333", "Size": "8388608", "Status": "0"}
