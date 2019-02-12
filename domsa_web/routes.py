@@ -24,6 +24,10 @@ def server_list():
      colls = coll_finder.get_mongo_collections()
      return render_template('servers.html', colls=colls)
 
+@app.route('/servers/<server>')
+def server_summary(server):
+     return server
+
 @app.route('/api/report', methods=['POST'])
 def report_api():
      if request.json:
