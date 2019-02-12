@@ -93,7 +93,7 @@ def Processors(json_object):
 
                 host_collection = db[host]
 
-                if status != 3:
+                if status != 0:
                         alert_search = host_collection.find({"Category": "Processors", "Device": proc_name}, sort=[('_id', -1)], limit=1)
                         if alert_search.count() == 0:
                                 slack_alert_message = "Status is not 0 for {} in {}".format(proc_name, host)
@@ -138,10 +138,11 @@ def PowerSupplies(json_object):
                 predict_fail = json_object['Report'][i]['PredictedFail']
                 ac_status = json_object['Report'][i]['ACLost']
                 
+                
                 host_collection = db[host]
 
-                if fan_failed:
-                        alert_search = host_collection.find({"Category": "PowerSupplies", "Name": name}, sort[('_id', -1)], limit=1)
+                if fan_failed == "true":
+                        alert_search = host_collection.find({"Category": "PowerSupplies", "Name": name}, sort=[('_id', -1)], limit=1)
                         if alert_search.count() == 0:
                                 slack_alert_message = "Fan {} failed on {}".format(name, host)
                                 slack.alert("PowerSupplies", slack_alert_message)
@@ -151,7 +152,7 @@ def PowerSupplies(json_object):
                                 try:
                                         for item in alert_search:
                                                 if item['Alert'] == "False":
-                                                        slack_alert_message = "Fan {} failed on {}".format(name, host)
+                                                        slack_alert_message = "Fan on {} failed on {}".format(name, host)
                                                         slack.alert("PowerSupplies", slack_alert_message)
                                                         mongo_doc = {"Name": name, "Category": "PowerSupplies", "Detected": exists, "InputRating": input_rating, "Failed": failed, "PredictedFail": predict_fail, "ACLost": ac_status, "FanFailed": fan_failed, "FirmwareVersion": fw_ver, "ACOn": ac_on, "Alert": "True"}
                                                         host_collection.insert(mongo_doc)
@@ -162,7 +163,7 @@ def PowerSupplies(json_object):
                                         print(str(e))
                                         
 
-                elif failed:
+                elif failed == "true":
                         alert_search = host_collection.find({"Category": "PowerSupplies", "Name": name}, sort[('_id', -1)], limit=1)
                         if alert_search.count() == 0:
                                 slack_alert_message = "PowerSupply {} failed on {}".format(name, host)
@@ -182,7 +183,7 @@ def PowerSupplies(json_object):
                                                         host_collection.insert(mongo_doc)
                                 except Exception as e:
                                         print(str(e))
-                elif predict_fail:
+                elif predict_fail == "true":
                         alert_search = host_collection.find({"Category": "PowerSupplies", "Name": name}, sort[('_id', -1)], limit=1)
                         if alert_search.count() == 0:
                                 slack_alert_message = "PowerSupply {} predicted to fail on {}".format(name, host)
@@ -210,11 +211,21 @@ def PowerSupplies(json_object):
 
                 mongo_doc = {"Name": name, "Detected": exists, "InputRating": input_rating, "Failed": failed, "PredictedFail": predict_fail, "ACLost": ac_status, "FanFailed": fan_failed, "FirmwareVersion": fw_ver, "ACOn": ac_on}
                 #mongo_doc = {"Name": name, "Detected": exists, "Failed": failed, "PredictedFail": predict_fail, "ACLost": ac_status, "FanFailed": fan_ok, "FirmwareVersion": fw_ver, "ACOn": ac_on}
-                host_collection = db[host].insert_one(mongo_doc)
+                host_collection = db[host].insert(mongo_doc)
+
+
+def PhysicalDisks(json_object):
+        host = json_object['Host']
+        for i in json_object['Report']:
+                oid = json_object['Report'][i]['ObjectID']
+                serial = json_object['Report'][i]['ObjectID']
+                num_partitions = ['Report'][i]['ObjectID']
+                neg_speed = ['Report'][i]['ObjectID']
+                capable_speed = ['Report'][i]['ObjectID']
+                product_id = ['Report'][i]['ObjectID']
+                status = ['Report'][i]['ObjectID']
 
 """
-def PhysicalDisks(json_object):
-
 def Fans(json_object):
 
 def NICs(json_object):

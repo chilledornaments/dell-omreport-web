@@ -10,7 +10,6 @@
        <!--<link rel="stylesheet" href="{{ url_for('static', filename='base.css') }}">-->
        <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
        <script src="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
-       <!--<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">-->
     </head>
     {% block navbar %}
     <nav class="navbar navbar-inverse">
@@ -22,11 +21,12 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="{{ url_for('homepage') }}">Check Password</a>
+            <a class="navbar-brand" href="{{ url_for('homepage') }}">OMSA Central</a>
         </div>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                <li><a href="{{ url_for('about') }}">About This Tool</a></li>
+                <li><a href="{{ url_for('about') }}">Home</a></li>
+                <li><a href="{{ url_for('about') }}">Alerts</a></li>
                 </ul>
 
             </div>
