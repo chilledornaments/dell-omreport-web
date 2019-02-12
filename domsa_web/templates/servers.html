@@ -7,7 +7,7 @@
 
 <ul class="list-group">
     {% for coll in colls %}
-    <li class="list-group-item">"{{ coll }}"</li>
+    <li><a href="{{ url_for('server_summary')}}" class="list-group-item">"{{ coll }}"</li>
     {% endfor %}
 </ul>
 
