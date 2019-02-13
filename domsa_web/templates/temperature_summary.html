@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block app_content %}
+<div class="page-header">
+    <h1>Temperature info for {{ server }}</h1>
+</div>
+
+<h2>{{ data.TempReading }}</h2>
+{% if data %}
+<div class="container"> 
+    <div class="row">
+        <div class="col-sm">
+            <ul class="list-group">
+
+                {% if data.TempInC|int > 42.0 %}
+                <li class="list-group-item list-group-item-danger">Temp in Celsius: {{ data.TempInC }}</li>
+                {% elif data.TempInC|int < 8.0 %}
+                <li class="list-group-item list-group-item-danger">Temp in Celsius: {{ data.TempInC }}</li>
+                {% else %}
+                <li class="list-group-item list-group-item-primary">Temp in Celsius: {{ data.TempInC }}</li>
+                {% endif %}
+
+            </ul>
+        </div>
+
+    </div>
+</div>
+{% else %}
+<div class="container"> 
+    <div class="row">       
+        <div class="col-sm">
+            Temperature data not collected
+        </div>
+    </div>
+</div>
+{% endif %}
+
+{% endblock %}

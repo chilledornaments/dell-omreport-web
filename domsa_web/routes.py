@@ -37,6 +37,12 @@ def memory_summary(server):
      else:
           info = info
      return render_template('memory_info.html', server=server, data=info)
+@app.route('/servers/<server>/temperature')
+def temp_summary(server):
+     info = data_grabber.get_temperature_data(server)
+     return render_template('temperature_summary.html', server=server, data=info)
+
+
 
 
 @app.route('/api/report', methods=['POST'])

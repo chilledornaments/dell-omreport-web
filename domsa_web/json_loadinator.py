@@ -9,7 +9,7 @@ def Temperature(json_object):
     for i in json_object['Report']: 
         TempReading = json_object['Report'][i]['TempReading']
         TempInC = json_object['Report'][i]['TempInC']
-        TempInC = TempInC / 10
+        TempInC = int(TempInC) / 10
         host_collection = db[host]
         if TempInC > 42.0 or TempInC < 8.0:
                 alert_search = host_collection.find({'Category': 'Temperature'}, sort=[('_id', -1)], limit=1)
