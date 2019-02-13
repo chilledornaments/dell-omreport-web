@@ -131,7 +131,28 @@ def get_physicaldisk_data(mongo_collection):
 
     except Exception as e:
         return str(e)
+def get_virtual_disks(mongo_collection):
+    try:
+        vdisk_items = db[mongo_collection].find({"Category": "VirtDisks"}, sort=[('_id', -1)]).distinct("OID")
+        if not vdisk_items:
+            return False
+        elif vdisk_items is None:
+            return False
+        else:
+            vdisk_data = {}
+            for vdisk in vdisk_items:
+                query = db[mongo_collection].find({"Category": "VirtDisks", "OID": vdisk}, sort=[('_id', -1)], limit=1)
 
+                for data in query:
+                    DeviceName = data['DeviceName']
+                    PoolName = data['PoolName']
+                    Status = data['Status']
+                    StripeSize = data['StripeSize']
+
+                    vdisk_data[vdisk] = {"DeviceName": DeviceName, "PoolName": PoolName, "Status": Status, "StripeSize": StripeSize}
+            return vdisk_data
+    except Exception as e:
+        return str(e)
 def get_fan_data(mongo_collection):
     try:
         fan_items = db[mongo_collection].find({"Category": "Fans"}, sort=[('_id', -1)]).distinct("Fan")

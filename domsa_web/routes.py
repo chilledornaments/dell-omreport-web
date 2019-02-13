@@ -64,6 +64,13 @@ def pdisk_summary(server):
           info = False
      return render_template('physical_disk_summary.html', server=server, data=info)
 
+@app.route('/servers/<server>/virtualdisks')
+def vdisk_summary(server):
+     info = data_grabber.get_virtual_disks(server)
+     if info is None:
+          info = False
+     return render_template('virtual_disk_summary.html', server=server, data=info)
+
 @app.route('/servers/<server>/fans')
 def fan_summary(server):
      info = data_grabber.get_fan_data(server)
@@ -95,8 +102,8 @@ def report_api():
                json_loadinator.Fans(request_json)
           elif category == "NICs":
                json_loadinator.NICs(request_json)
-          elif category == "VirtDisk":
-               json_loadinator.VirtDisk(request_json)
+          elif category == "VirtDisks":
+               json_loadinator.VirtDisks(request_json)
           else:
                return "Invalid Category"
           return "Passing it into a higher power"
