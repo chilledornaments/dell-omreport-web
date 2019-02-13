@@ -26,12 +26,18 @@ def server_list():
 
 @app.route('/servers/<server>')
 def server_summary(server):
+ 
+     return render_template('server_categories.html', server=server)
+
+@app.route('/servers/<server>/memory')
+def memory_summary(server):
      info = data_grabber.get_memory_data(server)
      if info is None:
-          info = ["Memory Not Collected"]
+          info = False
      else:
           info = info
      return render_template('memory_info.html', server=server, data=info)
+
 
 @app.route('/api/report', methods=['POST'])
 def report_api():

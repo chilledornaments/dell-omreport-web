@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block app_content %}
+<div class="page-header">
+        <h1>Categories for {{ server }}</h1>
+</div>
+
+<ul class="list-group">
+
+        <li><a href='{{ url_for("memory_summary", server=server)}}' class="list-group-item">Memory</a></li>
+
+</ul>
+
+{% endblock %}
