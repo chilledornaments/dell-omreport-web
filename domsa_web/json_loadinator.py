@@ -272,11 +272,34 @@ def VirtDisks(json_object):
                 PoolName = json_object['Report'][i]['PoolName']
                 Status = json_object['Report'][i]['Status']
                 StripeSize = json_object['Report'][i]['StripeSize']
+                if Status != "1":
+                        alert_search = host_collection.find({"Category": "VirtDisks", "Name": ObjectID}, sort=[('_id', -1)], limit=1)
+                        if alert_search.count() == 0:
+                                slack_alert_message = "Virtual Disk issue on {}. Host: {}".format(DeviceName, host)
+                                slack.alert("VirtDisks", slack_alert_message)
+                                mongo_doc = {"OID": ObjectID, "Category": "VirtDisks", "DeviceName": DeviceName, "PoolName": PoolName, "Status": Status, "StripeSize": StripeSize, "Alert": "True"}
+                                host_collection.insert(mongo_doc)
+                        else:
+                                try:
+                                        for item in alert_search:
+                                                if item['Alert'] == "False":
+                                                        slack_alert_message = "Virtual Disk issue on {}. Host: {}".format(DeviceName, host)
+                                                        slack.alert("VirtDisks", slack_alert_message)
+                                                        mongo_doc = {"OID": ObjectID, "Category": "VirtDisks", "DeviceName": DeviceName, "PoolName": PoolName, "Status": Status, "StripeSize": StripeSize, "Alert": "True"}
+                                                        host_collection.insert(mongo_doc)
+                                                else:
+                                                        mongo_doc = {"OID": ObjectID, "Category": "VirtDisks", "DeviceName": DeviceName, "PoolName": PoolName, "Status": Status, "StripeSize": StripeSize, "Alert": "True"}
+                                                        host_collection.insert(mongo_doc)
+                                except Exception as e:
+                                        print(str(e))
 
-                mongo_doc = {"Category": "VirtDisks", "OID": ObjectID, "DeviceName": DeviceName, "PoolName": PoolName, "Status": Status, "StripeSize": StripeSize}
-                host_collection.insert(mongo_doc) 
-"""
+                else:
+                        mongo_doc = {"Category": "VirtDisks", "OID": ObjectID, "DeviceName": DeviceName, "PoolName": PoolName, "Status": Status, "StripeSize": StripeSize, "Alert": "False"}
+                        host_collection.insert(mongo_doc) 
+
 def NICs(json_object):
+        host = json_object['Host']
+        for i in json_object['Report']:
+                host_collection = db[host]
+                
 
-
-"""
