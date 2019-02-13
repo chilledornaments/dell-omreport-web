@@ -76,3 +76,32 @@ def get_processors_data(mongo_collection):
     
     except Exception as e:
         return str(e)
+    
+def get_psu_data(mongo_collection):
+    try:
+        psu_items = db[mongo_collection].find({"Category": "PowerSupplies"}, sort=[('_id', -1)]).distinct("Name")
+        
+        if not psu_items:
+            return False
+            
+        elif psu_items is None: 
+            return False
+        else:
+            psu_data = {}
+            for psu in psu_items:
+                query = db[mongo_collection].find({"Category": "PowerSupplies", "Name": psu}, sort=[('_id', -1)], limit=1)
+                
+                for data in query:
+                    Exists = data['Detected']
+                    InputRating = data['InputRating']
+                    Failed = data['Failed']
+                    PredictedFail = data['PredictedFail']
+                    ACLost = data['ACLost']
+                    FanFailed = data['FanFailed']
+                    FirmwareVersion = data['FirmwareVersion']
+                    ACOn = data['ACOn']
+                    psu_data[psu] = {"Exists": Exists, "InputRating": InputRating, "Failed": Failed, "PredictedFail": PredictedFail, "ACLost": ACLost, \
+                        "FanFailed": FanFailed, "FirmwareVersion": FirmwareVersion, "ACOn": ACOn}
+            return psu_data
+    except Exception as e:
+        return str(e)

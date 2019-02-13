@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block app_content %}
+<div class="page-header">
+    <h1>PSU info for {{ server }}</h1>
+</div>
+
+<h2>Power Supplues</h2>
+{% if data %}
+<div class="container"> 
+    <div class="row">
+        {% for item in data %}
+        <div class="col-sm">
+            <ul class="list-group">
+                <li class="list-group-item-primary">{{ item }}</li>
+                {% if data[item].Exists != "true" %}
+                <li class="list-group-item list-group-item-warning">PSU Not Detected</li>
+                {% else %}
+                <li class="list-group-item list-group-item-success">PSU Detected</li>
+                {% endif %}
+                {% if data[item].ACOn != "true" %}
+                <li class="list-group-item list-group-item-danger">Not connnected to power</li>
+                {% else %}
+                <li class="list-group-item list-group-item-success">Connected to power</li>
+                {% endif %}
+                {% if data[item].FanFailed == "true" %}
+                <li class="list-group-item list-group-item-danger">Fan: Failed</li>
+                {% else %}
+                <li class="list-group-item list-group-item-success">Fan: OK</li>
+                {% endif %}
+                {% if data[item].ACLost == "true" %}
+                <li class="list-group-item list-group-item-danger">AC Power Lost</li>
+                {% else %}
+                <li class="list-group-item list-group-item-success">AC Power OK</li>
+                {% endif %}
+                {% if data[item].PredictedFail == "true" %}
+                <li class="list-group-item list-group-item-danger">Failure Predicted</li>
+                {% else %}
+                <li class="list-group-item list-group-item-success">No Failure Predicted</li>
+                {% endif %}
+                {% if data[item].Failed == "true" %}
+                <li class="list-group-item list-group-item-danger">PSU Failed</li>
+                {% else %}
+                <li class="list-group-item list-group-item-success">PSU Status OK</li>
+                {% endif %}
+                <li class="list-group-item list-group-item-primary">InputRating: {{ data[item].InputRating }}</li>            
+                <li class="list-group-item list-group-item-primary">FirmwareVersion: {{ data[item].FirmwareVersion }}</li>
+            </ul>
+           
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% else %}
+<div class="container"> 
+    <div class="row">       
+        <div class="col-sm">
+            Power Supply data not collected
+        </div>
+    </div>
+</div>
+{% endif %}
+
+{% endblock %}
