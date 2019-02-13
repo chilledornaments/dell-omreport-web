@@ -13,8 +13,7 @@
         <li><a href='{{ url_for("pdisk_summary", server=server)}}' class="list-group-item">Physical Disks</a></li>
         <li><a href='{{ url_for("vdisk_summary", server=server)}}' class="list-group-item">Virtual Disks</a></li>
         <li><a href='{{ url_for("fan_summary", server=server)}}' class="list-group-item">Fans</a></li>
-
-        
+        <li><a href='{{ url_for("nic_summary", server=server)}}' class="list-group-item">NICs</a></li>        
 </ul>
 
 {% endblock %}

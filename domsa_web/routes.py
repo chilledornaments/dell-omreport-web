@@ -78,6 +78,13 @@ def fan_summary(server):
           info = False
      return render_template('fan_summary.html', server=server, data=info)
 
+@app.route('/servers/<server>/nics')
+def nic_summary(server):
+     info = data_grabber.get_nic_data(server)
+     if info is None:
+          info = False
+     print(info)
+     return render_template('nic_summary.html', server=server, data=info)
 
 
 

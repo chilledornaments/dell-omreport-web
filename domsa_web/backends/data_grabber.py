@@ -172,3 +172,30 @@ def get_fan_data(mongo_collection):
             return fan_data
     except Exception as e:
         return str(e)
+    
+def get_nic_data(mongo_collection):
+    try:
+        nic_items = db[mongo_collection].find({"Category": "NICs"}, sort=[('_id', -1)]).distinct("Interface")
+        if not nic_items:
+            return False
+        elif nic_items is None:
+            return False
+        else:
+            nic_data = {}
+            for nic in nic_items:
+                query = db[mongo_collection].find({"Category": "NICs", "Interface": nic}, sort=[('_id', -1)], limit=1)
+
+                for data in query:
+                    Description = data['Description']
+                    Slot = data['Slot']
+                    MTU = data['MTU']
+                    Vendor = data['Vendor']
+                    DriverVersion = data['DriverVersion']
+                    FirmwareVersion = data['FirmwareVersion']
+                    CurrentMAC = data['CurrentMAC']
+
+                    nic_data[nic] = {"Description": Description, "Slot": Slot, "MTU": MTU, "Vendor": Vendor, "DriverVersion": DriverVersion, "FirmwareVersion": FirmwareVersion, "CurrentMAC": CurrentMAC}
+
+            return nic_data
+    except Exception as e:
+        return str(e)

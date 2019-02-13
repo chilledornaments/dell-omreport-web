@@ -259,7 +259,7 @@ def Fans(json_object):
                 host_collection = db[host]
 
                 SpeedInRPM = json_object['Report'][i]['SpeedInRPM']
-                mongo_doc = {"Category": "Fans", "SpeedInRPM": SpeedInRPM, "Fan": i}
+                mongo_doc = {"Category": "Fans", "SpeedInRPM": SpeedInRPM, "Fan": i, "Alert": "False"}
                 host_collection.insert(mongo_doc)
 
 def VirtDisks(json_object):
@@ -302,4 +302,16 @@ def NICs(json_object):
         for i in json_object['Report']:
                 host_collection = db[host]
                 
+                Interface = i
+                Description = json_object['Report'][i]['Description']
+                Slot = json_object['Report'][i]['Slot']
+                MTU = json_object['Report'][i]['MTU']
+                Vendor = json_object['Report'][i]['Vendor']
+                DriverVersion = json_object['Report'][i]['DriverVersion']
+                FirmwareVersion = json_object['Report'][i]['FirmwareVersion']
+                CurrentMAC = json_object['Report'][i]['CurrentMAC']
+
+                mongo_doc = {"Category": "NICs", "Interface": Interface, "Description": Description, "Slot": Slot, "MTU": MTU, "Vendor": Vendor, "DriverVersion": DriverVersion, \
+                        "FirmwareVersion": FirmwareVersion, "CurrentMAC": CurrentMAC, "Alert": "False"}
+                host_collection.insert(mongo_doc)
 
