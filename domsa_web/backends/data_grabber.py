@@ -1,6 +1,6 @@
 from domsa_web import app, client, db
 
-def get_server_data(mongo_collection):
+def get_memory_data(mongo_collection):
     try:
         # Find each unique memory module
         memory_items = db[mongo_collection].find({"Category": "Memory"}, sort=[('_id', -1)]).distinct("Device")
@@ -23,7 +23,12 @@ def get_server_data(mongo_collection):
                 for data in query:
                     status = data['Status']
                     Manufacturer = data['Manufacturer']
-                    memory_data[device] = {"Status": status, "Manufacturer": Manufacturer}
+                    SerialNumber = data['SerialNumber']
+                    PartNumber = data['PartNumber']
+                    Size = data['Size']
+                    Speed = data['Speed']
+                
+                    memory_data[device] = {"Status": status, "Manufacturer": Manufacturer, "SerialNumber": SerialNumber, "PartNumber": PartNumber, "Size": Size, "Speed": Speed}
             
             return memory_data
 
