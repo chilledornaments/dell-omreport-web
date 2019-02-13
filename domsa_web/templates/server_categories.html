@@ -6,10 +6,9 @@
 </div>
 
 <ul class="list-group">
-
         <li><a href='{{ url_for("memory_summary", server=server)}}' class="list-group-item">Memory</a></li>
         <li><a href='{{ url_for("temp_summary", server=server)}}' class="list-group-item">Temperature</a></li>
-
+        <li><a href='{{ url_for("proc_summary", server=server)}}' class="list-group-item">Processors</a></li>
 </ul>
 
 {% endblock %}

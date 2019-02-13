@@ -37,10 +37,21 @@ def memory_summary(server):
      else:
           info = info
      return render_template('memory_info.html', server=server, data=info)
+
 @app.route('/servers/<server>/temperature')
 def temp_summary(server):
      info = data_grabber.get_temperature_data(server)
      return render_template('temperature_summary.html', server=server, data=info)
+
+#TODO
+@app.route('/servers/<server>/processors')
+def proc_summary(server):
+     info = data_grabber.get_processors_data(server)
+     print(info)
+     if info is None:
+          info = False
+     return render_template('processors_summary.html', server=server, data=info)
+
 
 
 

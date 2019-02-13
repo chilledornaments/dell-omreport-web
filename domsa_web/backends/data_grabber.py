@@ -49,3 +49,30 @@ def get_temperature_data(mongo_collection):
                 return temperature_data
         except Exception as e:
             return str(e)
+
+def get_processors_data(mongo_collection):
+    try:
+        processor_items = db[mongo_collection].find({"Category": "Processors"}, sort=[('_id', -1)]).distinct("ProcessorName")
+        if not processor_items:
+            processor_data = False
+        elif processor_items is None:
+            processor_data = False
+        else:
+            processor_data = {}
+            for proc in processor_items:
+                query = db[mongo_collection].find({'Category': 'Processors', "ProcessorName": proc}, sort=[('_id', -1)], limit=1)
+                for data in query:
+                    ProcessorName = data['ProcessorName']
+                    MaxSpeed = data['MaxSpeed']
+                    CurrentSpeed = data['CurrentSpeed']
+                    Status = data['Status']
+                    Threads = data['Threads']
+                    Cores = data['Cores']
+                    Version = data['Version']
+                    Manufacturer = data['Manufacturer']
+                    processor_data[proc] = {"ProcessorName": ProcessorName, "CurrentSpeed": CurrentSpeed, "Status": Status, \
+                        "MaxSpeed": MaxSpeed, "Threads": Threads, "Cores": Cores, "Version": Version, "Manufacturer": Manufacturer}
+            return processor_data
+    
+    except Exception as e:
+        return str(e)
