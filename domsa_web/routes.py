@@ -1,8 +1,8 @@
 from domsa_web import app, json_loadinator
 from domsa_web.backends import coll_finder, data_grabber
-from flask import render_template, request
+from flask import render_template, request, send_from_directory
 from flask_mongoalchemy import MongoAlchemy
-import json, jsonify
+import json, jsonify, os
 """
 for i in b['Report']:
      print(b['Report'][i]['Description'])
@@ -18,6 +18,10 @@ def homepage():
 @app.route('/about')
 def about():
      return render_template('homepage.html')
+
+@app.route('/favicon.ico')
+def favicon():
+    return send_from_directory(os.path.join(app.root_path, 'static'), 'favicon.ico',mimetype='image/vnd.microsoft.icon')
 
 @app.route('/servers')
 def server_list():
