@@ -47,7 +47,6 @@ def temp_summary(server):
 @app.route('/servers/<server>/processors')
 def proc_summary(server):
      info = data_grabber.get_processors_data(server)
-     print(info)
      if info is None:
           info = False
      return render_template('processors_summary.html', server=server, data=info)
