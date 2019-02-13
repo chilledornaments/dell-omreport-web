@@ -218,12 +218,39 @@ def PhysicalDisks(json_object):
         host = json_object['Host']
         for i in json_object['Report']:
                 oid = json_object['Report'][i]['ObjectID']
-                serial = json_object['Report'][i]['ObjectID']
-                num_partitions = ['Report'][i]['ObjectID']
-                neg_speed = ['Report'][i]['ObjectID']
-                capable_speed = ['Report'][i]['ObjectID']
-                product_id = ['Report'][i]['ObjectID']
-                status = ['Report'][i]['ObjectID']
+                serial = json_object['Report'][i]['Serial']
+                num_partitions = json_object['Report'][i]['NumPartitions']
+                neg_speed = json_object['Report'][i]['NegotiatedSpeed']
+                capable_speed = json_object['Report'][i]['CapableSpeed']
+                product_id = json_object['Report'][i]['ProductID']
+                status = json_object['Report'][i]['Status']
+                
+                host_collection = db[host]
+
+                if status != "3":
+                        alert_search = host_collection.find({"Category": "PhysicalDisks", "Name": oid}, sort=[('_id', -1)], limit=1)
+                        if alert_search.count() == 0:
+                                slack_alert_message = "Disk issue on {}. Host: {}".format(oid, host)
+                                slack.alert("PhysicalDisks", slack_alert_message)
+                                mongo_doc = {"OID": oid, "Category": "PhysicalDisks", "SerialNumber": serial, "NumberPartitions": num_partitions, "NegotiatedSpeed": neg_speed, "CapableSpeed": capable_speed, "ProductID": product_id, "Alert": "True"}
+                                host_collection.insert(mongo_doc)
+                        else:
+                                try:
+                                        for item in alert_search:
+                                                if item['Alert'] == "False":
+                                                        slack_alert_message = "Disk issue on {}. Host: {}".format(oid, host)
+                                                        slack.alert("PhysicalDisks", slack_alert_message)
+                                                        mongo_doc = {"OID": oid, "Category": "PhysicalDisks", "SerialNumber": serial, "NumberPartitions": num_partitions, "NegotiatedSpeed": neg_speed, "CapableSpeed": capable_speed, "ProductID": product_id, "Alert": "True"}
+                                                        host_collection.insert(mongo_doc)
+                                                else:
+                                                        mongo_doc = {"OID": oid, "Category": "PhysicalDisks", "SerialNumber": serial, "NumberPartitions": num_partitions, "NegotiatedSpeed": neg_speed, "CapableSpeed": capable_speed, "ProductID": product_id, "Alert": "True"}
+                                                        host_collection.insert(mongo_doc)
+                                except Exception as e:
+                                        print(str(e))
+                else:
+                        mongo_doc = {"OID": oid, "Category": "PhysicalDisks", "SerialNumber": serial, "NumberPartitions": num_partitions, "NegotiatedSpeed": neg_speed, "CapableSpeed": capable_speed, "ProductID": product_id, "Alert": "False"}
+                        host_collection.insert(mongo_doc)
+
 
 """
 def Fans(json_object):

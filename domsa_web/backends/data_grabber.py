@@ -105,3 +105,30 @@ def get_psu_data(mongo_collection):
             return psu_data
     except Exception as e:
         return str(e)
+
+def get_physicaldisk_data(mongo_collection):
+    try:
+        pdisk_items = db[mongo_collection].find({"Category": "PhysicalDisks"}, sort=[('_id', -1)]).distinct("OID")
+
+        if not pdisk_items:
+            return False
+        elif pdisk_items is None:
+            return False
+        else:
+            pdisk_data = {}
+            for disk in pdisk_items:
+                query = db[mongo_collection].find({"Category": "PhysicalDisks", "OID": disk}, sort=[('_id', -1)], limit=1)
+
+                for data in query:
+                    SerialNumber = data['SerialNumber']
+                    NumberPartitions = data['NumberPartitions']
+                    NegotiatedSpeed = data['NegotiatedSpeed']
+                    CapableSpeed = data['CapableSpeed']
+                    ProductID = data['ProductID']
+                    pdisk_data[disk] = {"SerialNumber": SerialNumber, "NumberPartitions": NumberPartitions, "NegotiatedSpeed": NegotiatedSpeed, \
+                        "CapableSpeed": CapableSpeed, "ProductID": ProductID}
+            return pdisk_data
+
+    except Exception as e:
+        return str(e)
+

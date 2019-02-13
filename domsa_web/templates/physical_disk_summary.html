@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block app_content %}
+<div class="page-header">
+    <h1>Physical Disk info for {{ server }}</h1>
+</div>
+
+<h2>Physical Disks</h2>
+{% if data %}
+<div class="container"> 
+    <div class="row">
+        {% for item in data %}
+        <div class="col-sm">
+            <ul class="list-group">
+                <li class="list-group-item">{{ item }}</li>
+                <li class="list-group-item list-group-item-primary">Serial Number: {{ data[item].SerialNumber }}</li>
+                <li class="list-group-item list-group-item-primary">Number of Partitions: {{ data[item].NumberPartitions }}</li>
+                <li class="list-group-item list-group-item-primary">ProductID: {{ data[item].ProductID }}</li>
+                <li class="list-group-item list-group-item-primary">Negotiated Speed: {{ data[item].NegotiatedSpeed }} MbPS</li>
+                <li class="list-group-item list-group-item-primary">Capable Speed: {{ data[item].CapableSpeed }} MbPS</li>
+            </ul>          
+            
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% else %}
+<div class="container"> 
+    <div class="row">       
+        <div class="col-sm">
+            Physical Disk data not collected
+        </div>
+    </div>
+</div>
+{% endif %}
+
+{% endblock %}

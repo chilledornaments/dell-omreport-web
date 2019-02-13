@@ -57,6 +57,14 @@ def psu_summary(server):
           info = False
      return render_template('psu_summary.html', server=server, data=info)
 
+@app.route('/servers/<server>/physicaldisks')
+def pdisk_summary(server):
+     info = data_grabber.get_physicaldisk_data(server)
+     if info is None:
+          info = False
+     return render_template('physical_disk_summary.html', server=server, data=info)
+
+
 
 
 
