@@ -1,5 +1,5 @@
 from domsa_web import app, json_loadinator
-from domsa_web.backends import coll_finder
+from domsa_web.backends import coll_finder, data_grabber
 from flask import render_template, request
 from flask_mongoalchemy import MongoAlchemy
 import json, jsonify
@@ -26,7 +26,8 @@ def server_list():
 
 @app.route('/servers/<server>')
 def server_summary(server):
-     return server
+     info = data_grabber.get_server_data(server)
+     return render_template('hw_info.html', server=server, data=info)
 
 @app.route('/api/report', methods=['POST'])
 def report_api():
