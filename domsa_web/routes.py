@@ -64,6 +64,13 @@ def pdisk_summary(server):
           info = False
      return render_template('physical_disk_summary.html', server=server, data=info)
 
+@app.route('/servers/<server>/fans')
+def fan_summary(server):
+     info = data_grabber.get_fan_data(server)
+     if info is None:
+          info = False
+     return render_template('fan_summary.html', server=server, data=info)
+
 
 
 
@@ -85,7 +92,7 @@ def report_api():
           elif category == "PhysicalDisks":
                json_loadinator.PhysicalDisks(request_json)
           elif category == "Fans": 
-               json_loadinator.VirtDisk(request_json)
+               json_loadinator.Fans(request_json)
           elif category == "NICs":
                json_loadinator.NICs(request_json)
           elif category == "VirtDisk":

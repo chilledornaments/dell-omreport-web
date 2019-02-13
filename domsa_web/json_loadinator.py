@@ -252,9 +252,17 @@ def PhysicalDisks(json_object):
                         host_collection.insert(mongo_doc)
 
 
-"""
-def Fans(json_object):
 
+def Fans(json_object):
+        host = json_object['Host']
+        for i in json_object['Report']:
+                host_collection = db[host]
+
+                SpeedInRPM = json_object['Report'][i]['SpeedInRPM']
+                mongo_doc = {"Category": "Fans", "SpeedInRPM": SpeedInRPM, "Fan": i}
+                host_collection.insert(mongo_doc)
+         
+"""
 def NICs(json_object):
 
 def VirtDisk(json_object):

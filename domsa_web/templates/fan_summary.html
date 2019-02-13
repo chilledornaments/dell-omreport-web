@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block app_content %}
+<div class="page-header">
+    <h1>Fan info for {{ server }}</h1>
+</div>
+
+<h2>Fans</h2>
+{% if data %}
+<div class="container"> 
+    <div class="row">
+        {% for item in data %}
+        <div class="col-sm">
+            <ul class="list-group">
+                <li class="list-group-item">{{ item }}</li>
+                <li class="list-group-item list-group-item-primary">Speed in RPM: {{ data[item].SpeedInRPM }}</li>
+            </ul>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% else %}
+<div class="container"> 
+    <div class="row">       
+        <div class="col-sm">
+            Fan data not collected
+        </div>
+    </div>
+</div>
+{% endif %}
+
+{% endblock %}

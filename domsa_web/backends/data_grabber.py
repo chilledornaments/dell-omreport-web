@@ -132,3 +132,22 @@ def get_physicaldisk_data(mongo_collection):
     except Exception as e:
         return str(e)
 
+def get_fan_data(mongo_collection):
+    try:
+        fan_items = db[mongo_collection].find({"Category": "Fans"}, sort=[('_id', -1)]).distinct("Fan")
+        
+        if not fan_items:
+            return False
+        elif fan_items is None:
+            return False
+        else:
+            fan_data = {}
+            for fan in fan_items:
+                query = db[mongo_collection].find({"Category": "Fans", "Fan": fan}, sort=[('_id', -1)], limit=1)
+
+                for data in query:
+                    SpeedInRPM = data['SpeedInRPM']
+                    fan_data[fan] = {"Fan": fan, "SpeedInRPM": SpeedInRPM}
+            return fan_data
+    except Exception as e:
+        return str(e)
