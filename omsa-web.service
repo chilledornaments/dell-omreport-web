@@ -7,4 +7,4 @@ User=omsa
 Group=omsa
 WorkingDirectory=/opt/dell-omreport-web
 Environment="PATH=$PATH:/opt/dell-omreport-web/"
-ExecStart=/usr/local/bin/gunicorn --workers 5 -b 127.0.0.1:5000 omsa:app
+ExecStart=/usr/local/bin/gunicorn --workers 5 -b 127.0.0.1:5000 main:app
