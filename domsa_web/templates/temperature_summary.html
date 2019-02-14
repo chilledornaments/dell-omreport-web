@@ -11,7 +11,6 @@
     <div class="row">
         <div class="col-sm">
             <ul class="list-group">
-
                 {% if data.TempInC|int > 42.0 %}
                 <li class="list-group-item list-group-item-danger">Temp in Celsius: {{ data.TempInC }}</li>
                 {% elif data.TempInC|int < 8.0 %}
