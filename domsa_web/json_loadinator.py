@@ -227,12 +227,12 @@ def PhysicalDisks(json_object):
                 
                 host_collection = db[host]
 
-                if status != "3":
+                if status != "2" or status != "3":
                         alert_search = host_collection.find({"Category": "PhysicalDisks", "Name": oid}, sort=[('_id', -1)], limit=1)
                         if alert_search.count() == 0:
                                 slack_alert_message = "Disk issue on {}. Host: {}".format(oid, host)
                                 slack.alert("PhysicalDisks", slack_alert_message)
-                                mongo_doc = {"OID": oid, "Category": "PhysicalDisks", "SerialNumber": serial, "NumberPartitions": num_partitions, "NegotiatedSpeed": neg_speed, "CapableSpeed": capable_speed, "ProductID": product_id, "Alert": "True"}
+                                mongo_doc = {"OID": oid, "Category": "PhysicalDisks", "Status": status, "SerialNumber": serial, "NumberPartitions": num_partitions, "NegotiatedSpeed": neg_speed, "CapableSpeed": capable_speed, "ProductID": product_id, "Alert": "True"}
                                 host_collection.insert(mongo_doc)
                         else:
                                 try:
