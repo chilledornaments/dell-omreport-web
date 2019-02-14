@@ -4,3 +4,4 @@ python-dotenv
 flask-wtf
 pymongo
 flask-bootstrap
+requests
