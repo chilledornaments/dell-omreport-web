@@ -13,6 +13,13 @@
         <div class="col-sm">
             <ul class="list-group">
                 <li class="list-group-item">{{ item }}</li>
+                {% if data[item].Status|int == 3 %}
+                <li class="list-group-item list-group-item-warning">Status: {{ data[item].Status }}</li>
+                {% elif data[item].Status|int == 2 %}
+                <li class="list-group-item list-group-item-success">Status: {{ data[item].Status }}</li>
+                {% else %}
+                <li class="list-group-item list-group-item-danger">Status: {{ data[item].Status }}</li>
+                {% endif %}
                 <li class="list-group-item list-group-item-primary">Serial Number: {{ data[item].SerialNumber }}</li>
                 <li class="list-group-item list-group-item-primary">Number of Partitions: {{ data[item].NumberPartitions }}</li>
                 <li class="list-group-item list-group-item-primary">ProductID: {{ data[item].ProductID }}</li>
