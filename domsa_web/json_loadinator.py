@@ -93,9 +93,9 @@ def Processors(json_object):
 
                 host_collection = db[host]
 
-                if status != "0":
+                if status != "3":
                         alert_search = host_collection.find({"Category": "Processors", "Device": proc_name}, sort=[('_id', -1)], limit=1)
-                        if alert_search.count() == 3:
+                        if alert_search.count() == 0:
                                 slack_alert_message = "Status is not 3 for {} in {}".format(proc_name, host)
                                 slack.alert("Processors", slack_alert_message)
                                 mongo_doc = {"ProcessorName": proc_name, "Category": "Processors", "MaxSpeed": max_speed, "CurrentSpeed": curr_speed, "Status": status, \
