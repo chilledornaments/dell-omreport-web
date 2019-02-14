@@ -228,7 +228,7 @@ def PhysicalDisks(json_object):
                 host_collection = db[host]
 
                 if status != "2" or status != "3":
-                        alert_search = host_collection.find({"Category": "PhysicalDisks", "Name": oid}, sort=[('_id', -1)], limit=1)
+                        alert_search = host_collection.find({"Category": "PhysicalDisks", "OID": oid}, sort=[('_id', -1)], limit=1)
                         if alert_search.count() == 0:
                                 slack_alert_message = "Disk issue on {}. Host: {}".format(oid, host)
                                 slack.alert("PhysicalDisks", slack_alert_message)
