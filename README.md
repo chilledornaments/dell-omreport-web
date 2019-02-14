@@ -54,15 +54,24 @@ Great, you have a web interface. Now to get some data.
 ## Config
 
 `SECRET_KEY`: A secret key that's really long and complicated (i.e. openssl rand -base64 50)
+
 `MONGOALCHEMY_DATABASE`: The Database name. Something like `omsaReports`
+
 `MONGOALCHEMY_SERVER`: The Mongo server (i.e. 127.0.0.1)
+
 `MONGOALCHEMY_USER`: Required if `MONGOALCHEMY_SERVER_AUTH` is True
+
 `MONGOALCHEMY_PASSWORD`: Required if `MONGOALCHEMY_SERVER_AUTH` is True
+
 `MONGOALCHEMY_SERVER_AUTH`: Boolean. If you need to authenticate against MongoDB
 
 `SLACK`: Boolean. Send Slack alerts or not
+
 `SLACK_CHANNEL`: Required if `SLACK` is True. The channel to post messages to
+
 `SLACK_USERNAME`: Required if `SLACK` is True. The username for OMSA to post messages in Slack as
+
 `SLACK_ICON`: Required if `SLACK` is True. The icon to use when posting Slack messages
+
 `SLACK_WEBHOOK`: Required if `SLACK` is True. The incoming Slack webhook
 
