@@ -76,4 +76,12 @@ Great, you have a web interface. Now to get some data.
 `SLACK_WEBHOOK`: Required if `SLACK` is True. The incoming Slack webhook
 
 
+## Screenshots
 
+![Servers](https://github.com/mitchya1/dell-omreport-web/blob/master/readme_images/collections.png)
+
+![Categories](https://github.com/mitchya1/dell-omreport-web/blob/master/readme_images/categories.png)
+
+![Memory](https://github.com/mitchya1/dell-omreport-web/blob/master/readme_images/memory.png)
+
+![PhysicalDisks](https://github.com/mitchya1/dell-omreport-web/blob/master/readme_images/pdisk.png)
