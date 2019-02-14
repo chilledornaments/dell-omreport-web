@@ -1,8 +1,7 @@
 from domsa_web import app, json_loadinator
 from domsa_web.backends import coll_finder, data_grabber
 from flask import render_template, request, send_from_directory
-from flask_mongoalchemy import MongoAlchemy
-import json, jsonify, os
+import json, os
 """
 for i in b['Report']:
      print(b['Report'][i]['Description'])
