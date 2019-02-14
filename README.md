@@ -2,7 +2,7 @@
 
 ## Overview
 
-I wrote this tool to solve two probles:
+I wrote this tool to solve two problems:
 
 - While OMSA is a great tool, I'm not a fan of its clunky, outdated interface.
 
