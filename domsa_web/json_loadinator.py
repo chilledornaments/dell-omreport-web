@@ -240,10 +240,10 @@ def PhysicalDisks(json_object):
                                                 if item['Alert'] == "False":
                                                         slack_alert_message = "Disk issue on {}. Host: {}".format(oid, host)
                                                         slack.alert("PhysicalDisks", slack_alert_message)
-                                                        mongo_doc = {"OID": oid, "Category": "PhysicalDisks", "SerialNumber": serial, "NumberPartitions": num_partitions, "NegotiatedSpeed": neg_speed, "CapableSpeed": capable_speed, "ProductID": product_id, "Alert": "True"}
+                                                        mongo_doc = {"OID": oid, "Category": "PhysicalDisks", "Status": status, "SerialNumber": serial, "NumberPartitions": num_partitions, "NegotiatedSpeed": neg_speed, "CapableSpeed": capable_speed, "ProductID": product_id, "Alert": "True"}
                                                         host_collection.insert(mongo_doc)
                                                 else:
-                                                        mongo_doc = {"OID": oid, "Category": "PhysicalDisks", "SerialNumber": serial, "NumberPartitions": num_partitions, "NegotiatedSpeed": neg_speed, "CapableSpeed": capable_speed, "ProductID": product_id, "Alert": "True"}
+                                                        mongo_doc = {"OID": oid, "Category": "PhysicalDisks", "Status": status, "SerialNumber": serial, "NumberPartitions": num_partitions, "NegotiatedSpeed": neg_speed, "CapableSpeed": capable_speed, "ProductID": product_id, "Alert": "True"}
                                                         host_collection.insert(mongo_doc)
                                 except Exception as e:
                                         print(str(e))
