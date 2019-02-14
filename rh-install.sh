@@ -239,6 +239,14 @@ systemctl start omsa-web > /dev/null
 
 echo "*************************************************************"
 echo ""
+echo "Allowing NGINX to connect to the network"
+echo ""
+echo "*************************************************************"
+
+setsebool -P httpd_can_network_connect 1
+
+echo "*************************************************************"
+echo ""
 echo "Restarting NGINX"
 echo ""
 echo "*************************************************************"
