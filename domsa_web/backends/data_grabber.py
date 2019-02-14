@@ -125,8 +125,9 @@ def get_physicaldisk_data(mongo_collection):
                     NegotiatedSpeed = data['NegotiatedSpeed']
                     CapableSpeed = data['CapableSpeed']
                     ProductID = data['ProductID']
+                    Status = data['Status']
                     pdisk_data[disk] = {"SerialNumber": SerialNumber, "NumberPartitions": NumberPartitions, "NegotiatedSpeed": NegotiatedSpeed, \
-                        "CapableSpeed": CapableSpeed, "ProductID": ProductID}
+                        "CapableSpeed": CapableSpeed, "ProductID": ProductID, "Status": Status}
             return pdisk_data
 
     except Exception as e:
