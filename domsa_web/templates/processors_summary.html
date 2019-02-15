@@ -14,7 +14,7 @@
             <ul class="list-group">
                 <li class="list-group-item">{{ item }}</li>
                 <li class="list-group-item list-group-item-primary">Manufacturer: {{ data[item].Manufacturer }}</li>
-                {% if data[item].Status != "0" %}
+                {% if data[item].Status != "3" %}
                 <li class="list-group-item list-group-item-danger">Status: {{ data[item].Status }}</li>
                 {% else %}
                 <li class="list-group-item list-group-item-success">Status: {{ data[item].Status }}</li>
