@@ -11,3 +11,8 @@ class Config(object):
     SLACK_USERNAME = ""
     SLACK_ICON = ""
     SLACK_WEBHOOK = ""
+
+    # statsd setup
+    STATSD = True
+    STATSD_SERVER = "localhost"
+    STATSD_PORT = 8125

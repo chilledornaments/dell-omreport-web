@@ -2,6 +2,10 @@ from domsa_web import app, json_loadinator
 from domsa_web.backends import coll_finder, data_grabber
 from flask import render_template, request, send_from_directory
 import json, os
+
+if app.config['STATSD']:
+     from domsa_web.backends import domas_statsd
+
 """
 for i in b['Report']:
      print(b['Report'][i]['Description'])
@@ -95,8 +99,12 @@ def nic_summary(server):
 @app.route('/api/report', methods=['POST'])
 def report_api():
      if request.json:
+          
           request_json = request.json
           category = request_json['Category']
+          
+          if app.config['STATSD']:
+               domas_statsd.report_good_metrics(request_json['Host'])
 
           if category == "Temperature":
                json_loadinator.Temperature(request_json)     
@@ -118,6 +126,8 @@ def report_api():
                return "Invalid Category"
           return "Passing it into a higher power"
      else:
+          if app.config['STATSD']:
+               domas_statsd.report_bad_metrics(request_json['Host'])
           return "Invalid json"
      return "Hello"
 
