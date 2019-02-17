@@ -36,7 +36,7 @@ The install script:
 
 - Starts and enables MongoDB
 
-    - *Caveat: * You will need to create your own user for Mongo
+    - *Caveat:* You will need to create your own user for Mongo
 
 - Copies the service and NGINX config files to their appropriate locations
 
@@ -74,6 +74,16 @@ Great, you have a web interface. Now to get some data.
 `SLACK_ICON`: Required if `SLACK` is True. The icon to use when posting Slack messages
 
 `SLACK_WEBHOOK`: Required if `SLACK` is True. The incoming Slack webhook
+
+`STATSD`: Boolean. Use statsd or not
+
+`STATSD_SERVER`: The statsd server to send metrics to 
+
+`STATSD_PORT`: Port statsd is listening on
+
+## Statsd
+
+When a POST comes in from a server, `domsa_web.backends.domas_statsd` will send a message to statsd. If the POST request is a valid JSON, the `good_<server name>` counter will increment by one. Otherwise the `bad_<server name>` counter will increment by one.
 
 
 ## Screenshots
